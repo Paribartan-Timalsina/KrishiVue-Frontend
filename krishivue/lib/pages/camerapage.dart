@@ -76,7 +76,8 @@ class _CameraPageState extends State<CameraPage> {
         Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: MediaQuery.of(context).size.height * 0.20,
+              height: MediaQuery.of(context).size.height * 0.10,
+              width: MediaQuery.of(context).size.width * 1,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                   color: Colors.black),
@@ -85,7 +86,7 @@ class _CameraPageState extends State<CameraPage> {
                 Expanded(
                     child: IconButton(
                   padding: EdgeInsets.zero,
-                  iconSize: 30,
+                  iconSize: 40,
                   icon: Icon(
                       _isRearCameraSelected
                           ? CupertinoIcons.switch_camera

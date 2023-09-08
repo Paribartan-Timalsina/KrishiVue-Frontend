@@ -8,7 +8,8 @@ void main() {
     initialRoute: '/',
     routes: {
       "/":(context)=>SplashScreen(),
-      '/landing':(context)=>Landing(), 
+      '/landing':(context)=>Landing(),
+      
       
 
     },
