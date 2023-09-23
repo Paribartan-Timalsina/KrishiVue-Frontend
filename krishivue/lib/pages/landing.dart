@@ -96,16 +96,11 @@ class LandingState extends State<Landing> {
                           ),
                         )
                       : //if uploadimage is null then show empty container
-                      Container(
-                         
-                          //elese show image here
-                          // child: Container(
-          //                  height: MediaQuery.of(context).size.height * 0.5,
-          // width: MediaQuery.of(context).size.width * 1,
-                          child: Image.file(uploadimage!),
+                     // Container(
+                           Image.file(uploadimage!),
                           //child:Image.file(uploadimage!) //load image from file
                           //)
-                        ),
+                    //),
                 )),
                 SizedBox(
                   height: 10,
