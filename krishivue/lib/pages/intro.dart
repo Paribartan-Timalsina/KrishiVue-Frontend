@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
 
     // Delay navigation to the landing screen by 5 seconds
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
         //padding: const EdgeInsets.fromLTRB(0.5,0.5,0.5,0.5),
         child: Container(
           width: MediaQuery.of(context).size.width * 1, // 100% of the screen width
-  height: MediaQuery.of(context).size.height * 1, // 100% of the screen height
+          height: MediaQuery.of(context).size.height * 1, // 100% of the screen height
          decoration:BoxDecoration(
               image:DecorationImage(image: AssetImage('assets/back.jpg',
             

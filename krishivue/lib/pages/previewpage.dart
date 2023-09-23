@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:krishivue/pages/detection.dart';
+import 'package:http/http.dart' as http;
 
 class PreviewPage extends StatefulWidget {
   const PreviewPage({Key? key, required this.picture}) : super(key: key);
@@ -14,14 +15,33 @@ class PreviewPage extends StatefulWidget {
 }
 
 class _PreviewPageState extends State<PreviewPage> {
- void uploadImage(){
-Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DetectionPage(
-                  
-                  )));
+ void uploadImage() async {
+  // Create a POST request to your Flask API endpoint
+  var url = Uri.parse('YOUR_FLASK_API_ENDPOINT_URL'); // Replace with your API endpoint URL
+
+  // Create a multipart request
+  var request = http.MultipartRequest('POST', url);
+
+  // Add the image file to the request
+  var file = File(widget.picture.path);
+  var stream = http.ByteStream(file.openRead());
+  var length = await file.length();
+  var multipartFile = http.MultipartFile('image', stream, length, filename: 'image.jpg');
+  request.files.add(multipartFile);
+
+  // Send the request
+  var response = await request.send();
+
+  // Check the response status code
+  if (response.statusCode == 200) {
+    // Request was successful
+    // You can handle the response here if the server sends any data back
+  } else {
+    // Request failed
+    print('Error: ${response.reasonPhrase}');
   }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
