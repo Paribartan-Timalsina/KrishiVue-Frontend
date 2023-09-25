@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:krishivue/pages/landing.dart';
-
+import "package:krishivue/widgets/bottomnavbar.dart";
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => Landing(), // Replace with your landing screen widget
+          builder: (context) => CustomBottomNavigationBar(), // Replace with your landing screen widget
         ),
       );
     });
