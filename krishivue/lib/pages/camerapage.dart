@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:krishivue/pages/previewpage.dart';
 
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
+
 class CameraPage extends StatefulWidget {
   const CameraPage({Key? key, required this.cameras}) : super(key: key);
 
@@ -19,6 +21,7 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void dispose() {
     _cameraController.dispose();
+   //  Tflite.close();
     super.dispose();
   }
 
@@ -26,6 +29,8 @@ class _CameraPageState extends State<CameraPage> {
   void initState() {
     super.initState();
     initCamera(widget.cameras![0]);
+    //loadModel();
+    
   }
 
   Future takePicture() async {
@@ -49,19 +54,56 @@ class _CameraPageState extends State<CameraPage> {
       return null;
     }
   }
+//  Future<void> runObjectDetection(img) async {
+//   var recognitions = await Tflite.detectObjectOnFrame(
+//     bytesList: img.planes.map((plane) {
+//       return plane.bytes;
+//     }).toList(),
+//   //  model: "", // Replace with the YOLOv8 model name or ID
+//     imageHeight: img.height,
+//     imageWidth: img.width,
+//      imageMean: 127.5,   // defaults to 127.5
+//   imageStd: 127.5, 
+//     rotation: 90, 
+//     numResultsPerClass: 6,      // defaults to 5
+//   threshold: 0.4,     // defaults to 0.1
+//   asynch: true 
+//   );
 
+//   // Process and display the YOLOv8 recognitions as needed
+//   if (recognitions != null && mounted) {
+//     setState(() {
+//       // Handle the recognition results, draw bounding boxes, labels, etc.
+//     });
+//   }
+// }
   Future initCamera(CameraDescription cameraDescription) async {
     _cameraController =
         CameraController(cameraDescription, ResolutionPreset.high);
+    
     try {
       await _cameraController.initialize().then((_) {
         if (!mounted) return;
-        setState(() {});
+        setState(() {
+          
+        },);
+        _cameraController.startImageStream((CameraImage img) {
+            //cameraImage = img;
+           // runObjectDetection(img);
+    });
       });
     } on CameraException catch (e) {
       debugPrint("camera error $e");
     }
   }
+
+// Future<void> loadModel() async {
+//     await Tflite.loadModel(
+//       model: "../assets/plant.tflite", // Replace with your model file
+//       labels: "../assets/labels.txt",  // Replace with your class labels file
+//     );
+//   }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +124,8 @@ class _CameraPageState extends State<CameraPage> {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
                   color: Colors.black),
               child:
-                  Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                  Row(crossAxisAlignment: CrossAxisAlignment.center,
+                   children: [
                 Expanded(
                     child: IconButton(
                   padding: EdgeInsets.zero,

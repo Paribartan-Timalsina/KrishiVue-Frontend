@@ -198,7 +198,7 @@
 
 
 
-//THIS IS THE SECOND METHOD IN WHICH I WILL HAVE THE FUNCTIONALITY OF DISAPPEARNING AND REAPPEARNING NAVBAR
+// //THIS IS THE SECOND METHOD IN WHICH I WILL HAVE THE FUNCTIONALITY OF DISAPPEARNING AND REAPPEARNING NAVBAR
 
 
 
@@ -212,6 +212,7 @@ import "package:krishivue/widgets/bottomnavbar.dart";
 import 'package:krishivue/pages/detection.dart';
 import 'package:krishivue/widgets/app_bar.dart';
 import 'package:krishivue/widgets/nav_drawer.dart';
+import "package:krishivue/pages/previewgallery.dart";
 
 class Landing extends StatefulWidget {
   @override
@@ -231,7 +232,7 @@ class LandingState extends State<Landing> {
   }
 
   void uploadImage() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => DetectionPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PreviewGalleryPage(picture:uploadimage!)));
   }
 
   @override

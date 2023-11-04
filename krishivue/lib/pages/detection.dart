@@ -1,8 +1,9 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 class DetectionPage extends StatefulWidget {
-  const DetectionPage({super.key});
-
+ const DetectionPage({Key? key, required this.picture}) : super(key: key);
+  final XFile? picture;
   @override
   State<DetectionPage> createState() => _DetectionPageState();
 }

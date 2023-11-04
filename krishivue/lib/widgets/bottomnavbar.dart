@@ -1,6 +1,7 @@
 // custom_bottom_navigation_bar.dart
 
 import 'package:flutter/material.dart';
+import 'package:krishivue/pages/contact.dart';
 import 'package:krishivue/pages/landing.dart';
 import 'package:krishivue/pages/about.dart';
 
@@ -13,7 +14,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-   bool showBottomNavBar = true; // initially show the bottom navigation bar
+   bool showBottomNavBar = false; // initially show the bottom navigation bar
 int _selectedIndex = 0;
  void _onItemTapped(int index) {
     setState(() {
@@ -22,8 +23,8 @@ int _selectedIndex = 0;
   }
   final List<Widget> _pages = [
     Landing(),
-    AboutUs()
-    
+    AboutUs(),
+    ContactUs()
   
   ];
   @override
@@ -40,7 +41,8 @@ int _selectedIndex = 0;
        child: Stack(
           children:[
             Container(
-              child:_pages[_selectedIndex]
+              child:
+              _pages[_selectedIndex]
               ),
               if(showBottomNavBar)
                   Positioned(
@@ -53,26 +55,26 @@ int _selectedIndex = 0;
                 BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
-                backgroundColor: Colors.red,
+                backgroundColor: Color.fromARGB(255, 247, 93, 82),
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.business),
-                label: 'Business',
+                icon: Icon(Icons.info_outline),
+                label: 'About Us',
                 backgroundColor: Colors.green,
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.school),
-                label: 'School',
-                backgroundColor: Colors.purple,
+                icon: Icon(Icons.contact_page),
+                label: 'Contact Us',
+                backgroundColor: Color.fromARGB(255, 9, 155, 222),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-                backgroundColor: Colors.pink,
-              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.settings),
+              //   label: 'Settings',
+              //   backgroundColor: Colors.pink,
+              // ),
             ],
             currentIndex: _selectedIndex,
-            selectedItemColor: Colors.amber[800],
+            selectedItemColor: Color.fromARGB(255, 240, 139, 6),
             onTap: _onItemTapped,
           ),
                )

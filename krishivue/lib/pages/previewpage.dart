@@ -24,9 +24,11 @@ class _PreviewPageState extends State<PreviewPage> {
 
   // Add the image file to the request
   var file = File(widget.picture.path);
+  print("The picture is : ${file}");
   var stream = http.ByteStream(file.openRead());
   var length = await file.length();
   var multipartFile = http.MultipartFile('image', stream, length, filename: 'image.jpg');
+  print("The multipart file is : ${multipartFile}");
   request.files.add(multipartFile);
 
   // Send the request
