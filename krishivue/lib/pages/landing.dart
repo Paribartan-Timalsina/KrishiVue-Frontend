@@ -206,6 +206,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:krishivue/pages/camerapage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:krishivue/pages/home_view.dart';
 import 'dart:async';
 import 'dart:io';
 import "package:krishivue/widgets/bottomnavbar.dart";
@@ -319,12 +320,14 @@ class LandingState extends State<Landing> {
                                 children: <Widget>[
                                   ElevatedButton(
                                     onPressed: () async {
-                                      await availableCameras().then((value) =>
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CameraPage(cameras: value))));
+                                      // await availableCameras().then((value) =>
+                                      //     Navigator.push(
+                                      //         context,
+                                      //         MaterialPageRoute(
+                                      //             builder: (context) =>
+                                      //                 CameraPage(cameras: value))));
+
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeView()));
                                     },
                                     child: Icon(
                                       Icons.camera,

@@ -153,66 +153,70 @@ Widget build(BuildContext context) {
     );
   }
 
-  return Container(
-  child: Column(
-    children: <Widget>[
-      Expanded(
-        child: AspectRatio(
-          aspectRatio: cameraController!.value.aspectRatio,
+  return Scaffold(
+    body: SafeArea(
+      child: Container(
+    child: Column(
+      children: <Widget>[
+        Expanded(
+          child: AspectRatio(
+            aspectRatio: cameraController!.value.aspectRatio,
+            child: Container(
+               height: MediaQuery.of(context).size.height * 0.10,
+              width: MediaQuery.of(context).size.width * 1,
+              child: CameraPreview(cameraController!)
+              ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
           child: Container(
-             height: MediaQuery.of(context).size.height * 0.10,
+            height: MediaQuery.of(context).size.height * 0.10,
             width: MediaQuery.of(context).size.width * 1,
-            child: CameraPreview(cameraController!)
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              color: Colors.black,
             ),
-        ),
-      ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.10,
-          width: MediaQuery.of(context).size.width * 1,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            color: Colors.black,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  iconSize: 40,
-                  icon: Icon(
-                    _isRearCameraSelected
-                        ? CupertinoIcons.switch_camera
-                        : CupertinoIcons.switch_camera_solid,
-                    color: Colors.white,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    iconSize: 40,
+                    icon: Icon(
+                      _isRearCameraSelected
+                          ? CupertinoIcons.switch_camera
+                          : CupertinoIcons.switch_camera_solid,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isRearCameraSelected = !_isRearCameraSelected;
+                      });
+                      initializeCamera(cameras![_isRearCameraSelected ? 0 : 1]);
+                    },
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _isRearCameraSelected = !_isRearCameraSelected;
-                    });
-                    initializeCamera(cameras![_isRearCameraSelected ? 0 : 1]);
-                  },
                 ),
-              ),
-              Expanded(
-                child: IconButton(
-                  onPressed: takePicture,
-                  iconSize: 50,
-                  padding: EdgeInsets.zero,
-                  constraints: BoxConstraints(),
-                  icon: Icon(Icons.circle, color: Colors.white),
+                Expanded(
+                  child: IconButton(
+                    onPressed: takePicture,
+                    iconSize: 50,
+                    padding: EdgeInsets.zero,
+                    constraints: BoxConstraints(),
+                    icon: Icon(Icons.circle, color: Colors.white),
+                  ),
                 ),
-              ),
-              Spacer(),
-            ],
+                Spacer(),
+              ],
+            ),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   ),
-);
+    )
+  );
 
 }
 

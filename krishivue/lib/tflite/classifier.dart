@@ -149,7 +149,7 @@ print('The numlocations is: ${numLocations.getIntValue(0)}');
     int resultsCount = min(NUM_RESULTS, numLocations.getIntValue(0));
 print("The value of resultCount is:${resultsCount}");
     // Using labelOffset = 1 as ??? at index 0
-    int labelOffset = 1;
+    
 
     // Using bounding box utils for easy conversion of tensorbuffer to List<Rect>
     List<Rect> locations = BoundingBoxUtils.convert(
