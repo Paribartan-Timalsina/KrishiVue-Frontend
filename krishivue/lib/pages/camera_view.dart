@@ -156,13 +156,15 @@ Widget build(BuildContext context) {
   return Container(
   child: Column(
     children: <Widget>[
-      AspectRatio(
-        aspectRatio: cameraController!.value.aspectRatio,
-        child: Container(
-           height: MediaQuery.of(context).size.height * 0.10,
-          width: MediaQuery.of(context).size.width * 1,
-          child: CameraPreview(cameraController!)
-          ),
+      Expanded(
+        child: AspectRatio(
+          aspectRatio: cameraController!.value.aspectRatio,
+          child: Container(
+             height: MediaQuery.of(context).size.height * 0.10,
+            width: MediaQuery.of(context).size.width * 1,
+            child: CameraPreview(cameraController!)
+            ),
+        ),
       ),
       Align(
         alignment: Alignment.bottomCenter,
