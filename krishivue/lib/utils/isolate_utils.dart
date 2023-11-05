@@ -59,8 +59,9 @@ class IsolateData {
   IsolateData(
     this.cameraImage,
     this.interpreterAddress,
-    this.labels,[
-      this.responsePort,
+    this.labels,
+    [
+    this.responsePort,
     ]
   );
 }
