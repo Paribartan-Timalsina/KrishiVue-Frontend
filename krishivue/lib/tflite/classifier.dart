@@ -67,6 +67,7 @@ class Classifier {
         _outputShapes!.add(tensor.shape);
         _outputTypes!.add(tensor.type);
       });
+      
       print("The outshapes is ${_outputShapes}");
     } catch (e) {
       print("Error while creating interpreter: $e");
