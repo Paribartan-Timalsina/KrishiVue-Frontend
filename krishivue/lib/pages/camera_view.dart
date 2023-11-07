@@ -72,7 +72,7 @@ cameras = await availableCameras();
   Future initializeCamera(CameraDescription cameraDescription) async {
    // cameras = await availableCameras();
     cameraController =
-        CameraController(cameraDescription, ResolutionPreset.high);
+        CameraController(cameraDescription, ResolutionPreset.low);
     
     if(cameras!=null){
       print("Hello these are the cameras");
@@ -269,6 +269,7 @@ Widget build(BuildContext context) {
     isolateUtils!.sendPort!
         .send(isolateData..responsePort = responsePort.sendPort);
     var results = await responsePort.first;
+    print(results);
     return results;
   }
 

@@ -17,15 +17,14 @@ class Classifier {
   /// Labels file loaded as list
   List<String>? _labels;
 
-  static const String MODEL_FILE_NAME = "detect.tflite";
-  static const String LABEL_FILE_NAME = "labels.txt";
+  static const String MODEL_FILE_NAME = "fruits.tflite";
+  static const String LABEL_FILE_NAME = "fruits.txt";
 
   /// Input size of image (height = width = 300)
   static const int INPUT_SIZE = 300;
 
   /// Result score threshold
-  static const double THRESHOLD = 0.3;
-
+  static const double THRESHOLD = 0.01;
   /// [ImageProcessor] used to pre-process the image
   ImageProcessor? imageProcessor;
 
@@ -43,6 +42,7 @@ class Classifier {
 
   Classifier({
     Interpreter? interpreter,
+    
     List<String>? labels,
   }) {
     loadModel(interpreter: interpreter);
@@ -52,6 +52,8 @@ class Classifier {
   /// Loads interpreter from asset
   void loadModel({Interpreter? interpreter}) async {
     try {
+      
+    
       _interpreter = interpreter ??
           await Interpreter.fromAsset(
             MODEL_FILE_NAME,
@@ -119,12 +121,14 @@ class Classifier {
     // TensorBuffers for output tensors
     TensorBuffer outputLocations = TensorBufferFloat(_outputShapes![1]);//1
 
-    TensorBuffer outputClasses = TensorBufferFloat(_outputShapes![0]);//0
+    TensorBuffer outputClasses = TensorBufferFloat(_outputShapes![3]);//0
     
-    TensorBuffer outputScores = TensorBufferFloat(_outputShapes![3]);//3
+    TensorBuffer outputScores = TensorBufferFloat(_outputShapes![0]);//3
     print("Hello,${outputScores.getDoubleValue(2)}");
     TensorBuffer numLocations = TensorBufferFloat(_outputShapes![2]);//2
 print('The numlocations is: ${numLocations.getIntValue(0)}');
+
+
     // Inputs object for runForMultipleInputs
     // Use [TensorImage.buffer] or [TensorBuffer.buffer] to pass by reference
     List<Object> inputs = [inputImage.buffer];
@@ -132,8 +136,8 @@ print('The numlocations is: ${numLocations.getIntValue(0)}');
     // Outputs map
     Map<int, Object> outputs = {
       1: outputLocations.buffer,
-      0: outputClasses.buffer,
-      3: outputScores.buffer,
+      3: outputClasses.buffer,
+      0: outputScores.buffer,
       2: numLocations.buffer,
     };
 
@@ -154,7 +158,7 @@ print("The value of resultCount is:${resultsCount}");
     // Using bounding box utils for easy conversion of tensorbuffer to List<Rect>
     List<Rect> locations = BoundingBoxUtils.convert(
       tensor: outputLocations,
-      valueIndex: [1, 0, 3, 2],
+      valueIndex: [0, 1, 2, 3],
       boundingBoxAxis: 2,
       boundingBoxType: BoundingBoxType.BOUNDARIES,
       coordinateType: CoordinateType.RATIO,
