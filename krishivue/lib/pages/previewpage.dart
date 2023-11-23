@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:krishivue/pages/detection.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,17 +17,17 @@ class PreviewPage extends StatefulWidget {
 class _PreviewPageState extends State<PreviewPage> {
  void uploadImage() async {
   // Create a POST request to your Flask API endpoint
-  var url = Uri.parse('YOUR_FLASK_API_ENDPOINT_URL'); // Replace with your API endpoint URL
+  var url = await  Uri.parse('http://192.168.1.70:8000/predictCropDisease'); // Replace with your API endpoint URL
 
   // Create a multipart request
-  var request = http.MultipartRequest('POST', url);
+  var request = await  http.MultipartRequest('POST', url);
 
   // Add the image file to the request
   var file = File(widget.picture.path);
   print("The picture is : ${file}");
   var stream = http.ByteStream(file.openRead());
   var length = await file.length();
-  var multipartFile = http.MultipartFile('image', stream, length, filename: 'image.jpg');
+  var multipartFile = http.MultipartFile('file', stream, length, filename: file.path);
   print("The multipart file is : ${multipartFile}");
   request.files.add(multipartFile);
 
@@ -36,9 +36,19 @@ class _PreviewPageState extends State<PreviewPage> {
 
   // Check the response status code
   if (response.statusCode == 200) {
+     try {
+  var jsonResponse = await response.stream.bytesToString();
+  var decodedResponse = json.decode(jsonResponse);
+
+  // Print the decoded JSON response
+  print('Response: $decodedResponse');
+} catch (e) {
+  print('Error decoding JSON response: $e');
+}
     // Request was successful
     // You can handle the response here if the server sends any data back
   } else {
+    myResult();
     // Request failed
     print('Error: ${response.reasonPhrase}');
   }
@@ -69,8 +79,8 @@ class _PreviewPageState extends State<PreviewPage> {
            Container(
                           //elese show uplaod button
                           child: ElevatedButton.icon(
-                          onPressed: () {
-                            uploadImage();
+                          onPressed: ()  async {
+                             uploadImage();
                             //start uploading image
                           },
                           icon: Icon(Icons.file_upload,
@@ -85,4 +95,16 @@ class _PreviewPageState extends State<PreviewPage> {
       ),
     );
   }
+}
+
+Widget myResult(){
+  return Scaffold(
+    body: SafeArea(
+      child: Column(children:<Widget> [
+CircularProgressIndicator()
+      ]),
+    )
+
+  
+  );
 }

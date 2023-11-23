@@ -206,7 +206,7 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:krishivue/pages/camerapage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:krishivue/pages/home_view.dart';
+import 'package:krishivue/ui/home_view.dart';
 import 'dart:async';
 import 'dart:io';
 import "package:krishivue/widgets/bottomnavbar.dart";

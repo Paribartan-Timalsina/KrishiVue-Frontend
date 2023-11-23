@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
+import 'dart:convert';
 import 'package:krishivue/pages/detection.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,7 +17,7 @@ class PreviewGalleryPage extends StatefulWidget {
 class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
  void uploadImage() async {
   // Create a POST request to your Flask API endpoint
-  var url = Uri.parse('YOUR_FLASK_API_ENDPOINT_URL'); // Replace with your API endpoint URL
+  var url = Uri.parse('http://192.168.1.70:8000/predictCropDisease'); // Replace with your API endpoint URL
 
   // Create a multipart request
   var request = http.MultipartRequest('POST', url);
@@ -27,7 +27,7 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
   print("The picture is : ${file}");
   var stream = http.ByteStream(file.openRead());
   var length = await file.length();
-  var multipartFile = http.MultipartFile('image', stream, length, filename: 'image.jpg');
+  var multipartFile = http.MultipartFile('file', stream, length, filename: file.path);
   print("The multipart file is : ${multipartFile}");
   request.files.add(multipartFile);
 
@@ -36,9 +36,18 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
 
   // Check the response status code
   if (response.statusCode == 200) {
-    // Request was successful
-    // You can handle the response here if the server sends any data back
+    try {
+  var jsonResponse = await response.stream.bytesToString();
+  var decodedResponse = json.decode(jsonResponse);
+
+  // Print the decoded JSON response
+  print('Response: $decodedResponse');
+} catch (e) {
+  print('Error decoding JSON response: $e');
+}
+
   } else {
+    print("The error has occured");
     // Request failed
     print('Error: ${response.reasonPhrase}');
   }
