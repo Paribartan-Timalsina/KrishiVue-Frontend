@@ -11,4 +11,6 @@ class ScreenParams {
 
   static Size screenPreviewSize =
       Size(screenSize.width, screenSize.width * previewRatio);
+      
+
 }

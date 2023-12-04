@@ -9,6 +9,7 @@ import '../service/detector_service.dart';
 import '../ui/box_widget.dart';
 import '../ui/stats_widget.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 /// [DetectorWidget] sends each frame for inference
 class DetectorWidget extends StatefulWidget {
   /// Constructor
@@ -60,6 +61,7 @@ bool _isRearCameraSelected = true;
           setState(() {
             results = values['recognitions'];
             stats = values['stats'];
+            
           });
         });
       });
@@ -88,14 +90,35 @@ bool _isRearCameraSelected = true;
   Future takePicture() async {
   
     try {
-      
+      print("This is clicked");
       XFile picture = await _cameraController!.takePicture();
+      print("The results before sorting:");
+      print(results);
+       // Sorting the results based on scores in descending order
+      //results!.sort((a, b) => b.score.compareTo(a.score));
+      //LTRB 207.5, 0.8, 317.7, 17.8
+       print("The results after sorting:");
+        print(results![0]);
+       print(results![0].location.left);
+       final rectData= {
+          'left':results![0].location.left,
+          'top':results![0].location.top,
+          'width':results![0].location.width,
+          'height':results![0].location.height,
+          'scheight':300,
+          'scwidth':300,
+       };
+        // Convert Map to JSON
+  final myString = await json.encode(rectData);
+       print(myString);
       
+       
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => PreviewPage(
                     picture: picture,
+                    myString:myString,
                   )));
                   
     } on CameraException catch (e) {

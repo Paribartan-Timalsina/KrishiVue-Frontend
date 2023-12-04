@@ -175,7 +175,7 @@ class _DetectorServer {
   static const int mlModelInputSize = 300;
 
   /// Result confidence threshold
-  static const double confidence = 0.2;
+  static const double confidence = 0.07;
   Interpreter? _interpreter;
   List<String>? _labels;
 
@@ -268,7 +268,7 @@ class _DetectorServer {
         (x) {
           final pixel = imageInput.getPixel(x, y);
           return [pixel.r, pixel.g, pixel.b];
-        },
+         } 
       ),
     );
 
@@ -286,18 +286,18 @@ class _DetectorServer {
         .map((list) => list.map((value) => (value * mlModelInputSize)).toList())
         .map((rect) => Rect.fromLTRB(rect[1], rect[0], rect[3], rect[2]))
         .toList();
-    print('Locations: $locations');
+    //print('Locations: $locations');
     // Classes
     final classesRaw = output.last.first as List<double>;
     final classes = classesRaw.map((value) => value.toInt()).toList();
-print('Classes: $classes');
+    //print('Classes: $classes');
     // Scores
     final scores = output.first.first as List<double>;
-print('Scores: $scores');
+    //print('Scores: $scores');
     // Number of detections
     final numberOfDetectionsRaw = output.elementAt(2).first as double;
     final numberOfDetections = numberOfDetectionsRaw.toInt();
-print('Number of detections: $numberOfDetections');
+    //print('Number of detections: $numberOfDetections');
     final List<String> classification = [];
     for (var i = 0; i < numberOfDetections; i++) {
       classification.add(_labels![classes[i]]);
@@ -317,6 +317,7 @@ print('Number of detections: $numberOfDetections');
         );
       }
     }
+    //print(recognitions);
 
     var inferenceElapsedTime =
         DateTime.now().millisecondsSinceEpoch - inferenceTimeStart;

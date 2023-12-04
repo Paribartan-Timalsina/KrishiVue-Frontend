@@ -242,13 +242,13 @@ class LandingState extends State<Landing> {
       appBar: CustomAppBar(title: "Home"),
       body: SafeArea(
         child: GestureDetector(
-          // Wrap the entire content with a GestureDetector
-          // onTap:() {
-          //   setState(() {
-          //     // Toggle the visibility of the bottom navigation bar
-          //     showBottomNavBar = !showBottomNavBar;
-          //   });
-          // },
+        //  // Wrap the entire content with a GestureDetector
+        //   onTap:() {
+        //     setState(() {
+        //       // Toggle the visibility of the bottom navigation bar
+        //       showBottomNavBar = !showBottomNavBar;
+        //     });
+        //   },
           child: Stack(
             children: [
               Container(

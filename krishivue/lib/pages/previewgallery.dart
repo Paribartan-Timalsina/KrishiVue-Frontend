@@ -15,9 +15,13 @@ class PreviewGalleryPage extends StatefulWidget {
 }
 
 class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
+  bool uploading=false;
  void uploadImage() async {
+  setState(() {
+    uploading=true;
+  });
   // Create a POST request to your Flask API endpoint
-  var url = Uri.parse('http://192.168.1.70:8000/predictCropDisease'); // Replace with your API endpoint URL
+  var url = Uri.parse('http://192.168.1.68:8000/predictdiseases'); // Replace with your API endpoint URL
 
   // Create a multipart request
   var request = http.MultipartRequest('POST', url);
@@ -30,6 +34,7 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
   var multipartFile = http.MultipartFile('file', stream, length, filename: file.path);
   print("The multipart file is : ${multipartFile}");
   request.files.add(multipartFile);
+  
 
   // Send the request
   var response = await request.send();
@@ -39,6 +44,7 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
     try {
   var jsonResponse = await response.stream.bytesToString();
   var decodedResponse = json.decode(jsonResponse);
+  
 
   // Print the decoded JSON response
   print('Response: $decodedResponse');
@@ -77,7 +83,8 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
 
            Container(
                           //elese show uplaod button
-                          child: ElevatedButton.icon(
+                          child:
+                          uploading?CircularProgressIndicator(): ElevatedButton.icon(
                           onPressed: () {
                             uploadImage();
                             //start uploading image

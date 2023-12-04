@@ -8,6 +8,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+   print(MediaQuery.sizeOf(context));
     ScreenParams.screenSize = MediaQuery.sizeOf(context);
     return Scaffold(
       key: GlobalKey(),
