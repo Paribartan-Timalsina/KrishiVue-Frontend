@@ -13,13 +13,18 @@ import joblib
 from pydantic import BaseModel
 import json
 
+
+
 MODEL = tf.keras.models.load_model("../Trained Model/1")
-CropPredictionModel = joblib.load("../Crop Prediction Model/CropPredictionModel.joblib")
+CropPredictionModel = tf.keras.models.load_model("./saved_model")
+# CropDiseasePrdeictionModel=joblib.load("./model.joblib")      
 
 
-CLASS_NAMES = ['Potato___Early_blight',
+
+CLASS_NAMES1 = ['Potato___Early_blight',
                'Potato___healthy', 'POTATO__Late_blight']
-
+CLASS_NAMES2 = ['Early_blight',
+               'Healthy', 'Late_blight']
 
 app = FastAPI()
 app.add_middleware(
@@ -68,7 +73,8 @@ cropNameDict = {
 
     
 
-@app.get("/hello")
+@app.get("/")
+
 async def root():
     return {"message": "Hello World"}
 
@@ -90,25 +96,52 @@ async def predictCrop(package:Package):
 async def predict(
     file: UploadFile = File(...)
 ):
+    
     try:
         image = read_file_as_image(await file.read())
-        print("image : ", image)
+        #print("image : ", image)
 
         img_batch = np.expand_dims(image, 0)
-        print("image_batch : ", img_batch)
+        #print("image_batch : ", img_batch)
 
         prediction = MODEL.predict(img_batch)
-        predicted_class = CLASS_NAMES[np.argmax(prediction[0])]
+        predicted_class = CLASS_NAMES1[np.argmax(prediction[0])]
         confidence = np.max(prediction[0])
+
+    
         return{
             'class': predicted_class,
-            'confidence': float(confidence)
-
+            'confidence': float(confidence),
+            
         }
 
         return JSONResponse(content={"message": f"Image uploaded successfully {prediction}"}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+@app.post("/predictCropDiseaseDemo")
+async def predict(
+    file: UploadFile = File(...)
+    ):
+        image = read_file_as_image(await file.read())
+        #print("image : ", image)
+
+        img_batch = np.expand_dims(image, 0)
+        #print("image_batch : ", img_batch)
+
+        prediction = CropPredictionModel.predict(img_batch)
+        predicted_class = CLASS_NAMES2[np.argmax(prediction[0])]
+        confidence = np.max(prediction[0])
+        return{
+            'class': predicted_class,
+            'confidence': float(confidence),
+            
+        }
+
+
+
+
+
 
 
 if __name__ == "__main__":
