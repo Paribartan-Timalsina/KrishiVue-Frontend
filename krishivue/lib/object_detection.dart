@@ -20,8 +20,8 @@ import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class ObjectDetection {
-  static const String _modelPath = 'assets/models/fruits1.tflite';
-  static const String _labelPath = 'assets/models/fruits.txt';
+  static const String _modelPath = 'assets/models/final.tflite';
+  static const String _labelPath = 'assets/models/labelmap.txt';
 
   Interpreter? _interpreter;
   List<String>? _labels;
@@ -116,7 +116,7 @@ class ObjectDetection {
 
     log('Outlining objects...');
     for (var i = 0; i < numberOfDetections; i++) {
-      if (scores[i] > 0.3) {
+      if (scores[i] > 0.5) {
         // Rectangle drawing
         img.drawRect(
           imageInput,

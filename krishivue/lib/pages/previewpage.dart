@@ -24,7 +24,7 @@ class _PreviewPageState extends State<PreviewPage> {
   });
    print(widget.myString);
   // Create a POST request to your Flask API endpoint
-  var url = await  Uri.parse('http://192.168.1.68:8000/predictCropDisease'); // Replace with your API endpoint URL
+  var url = await  Uri.parse('http://192.168.1.66:8000/predictCropDisease'); // Replace with your API endpoint URL
 
   // Create a multipart request
   var request = await  http.MultipartRequest('POST', url);

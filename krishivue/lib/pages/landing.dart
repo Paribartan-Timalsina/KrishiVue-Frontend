@@ -221,14 +221,14 @@ class Landing extends StatefulWidget {
 }
 
 class LandingState extends State<Landing> {
-  File? uploadimage; // variable for the chosen file
+  XFile? uploadimage; // variable for the chosen file
   int currentPageIndex = 0;
   bool showBottomNavBar = true; // initially show the bottom navigation bar
 
   Future<void> chooseImage() async {
     var choosedimage = await ImagePicker().pickImage(source: ImageSource.gallery);
     setState(() {
-      uploadimage = File(choosedimage!.path);
+      uploadimage = choosedimage!;
     });
   }
 
@@ -283,7 +283,7 @@ class LandingState extends State<Landing> {
                                     fontSize: 20,
                                   ),
                                 )
-                              : Image.file(uploadimage!),
+                              : Image.file(File(uploadimage!.path)),
                         ),
                       ),
                       SizedBox(

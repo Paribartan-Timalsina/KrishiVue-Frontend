@@ -68,8 +68,8 @@ class _Command {
 /// are executed in a background isolate.
 /// This class just sends and receives messages to the isolate.
 class Detector {
-  static const String _modelPath = 'assets/models/fruits1.tflite';
-  static const String _labelPath = 'assets/models/fruits.txt';
+  static const String _modelPath = 'assets/models/final.tflite';
+  static const String _labelPath = 'assets/models/labelmap.txt';
 
   Detector._(this._isolate, this._interpreter, this._labels);
 
@@ -175,7 +175,7 @@ class _DetectorServer {
   static const int mlModelInputSize = 300;
 
   /// Result confidence threshold
-  static const double confidence = 0.07;
+  static const double confidence = 0.4;
   Interpreter? _interpreter;
   List<String>? _labels;
 

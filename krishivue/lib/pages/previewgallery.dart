@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class PreviewGalleryPage extends StatefulWidget {
   const PreviewGalleryPage({Key? key, required this.picture}) : super(key: key);
 
-  final File picture;
+  final XFile picture;
 
   @override
   State<PreviewGalleryPage> createState() => _PreviewGalleryPageState();
@@ -27,7 +27,7 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
   var request = http.MultipartRequest('POST', url);
 
   // Add the image file to the request
-  var file = widget.picture;
+  var file = File(widget.picture.path);
   print("The picture is : ${file}");
   var stream = http.ByteStream(file.openRead());
   var length = await file.length();
@@ -42,9 +42,13 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
   // Check the response status code
   if (response.statusCode == 200) {
     try {
-  var jsonResponse = await response.stream.bytesToString();
+      var jsonResponse = await response.stream.bytesToString();
   var decodedResponse = json.decode(jsonResponse);
+      Navigator.push(context,MaterialPageRoute(builder:(context)=>DetectionPage(picture: widget.picture, myresult: decodedResponse) ));
   
+setState(() {
+  uploading=false;
+});
 
   // Print the decoded JSON response
   print('Response: $decodedResponse');
@@ -84,7 +88,12 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
            Container(
                           //elese show uplaod button
                           child:
-                          uploading?CircularProgressIndicator(): ElevatedButton.icon(
+                          uploading?
+                          Container( child: 
+                          CircularProgressIndicator(),
+                          
+                          )
+                          : ElevatedButton.icon(
                           onPressed: () {
                             uploadImage();
                             //start uploading image
