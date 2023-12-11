@@ -21,7 +21,7 @@ class _PreviewGalleryPageState extends State<PreviewGalleryPage> {
     uploading=true;
   });
   // Create a POST request to your Flask API endpoint
-  var url = Uri.parse('http://192.168.1.68:8000/predictdiseases'); // Replace with your API endpoint URL
+  var url = Uri.parse('http://192.168.1.66:8000/predictdiseases'); // Replace with your API endpoint URL
 
   // Create a multipart request
   var request = http.MultipartRequest('POST', url);
