@@ -1,8 +1,13 @@
 import 'dart:io';
-
+import 'dart:convert';
+import 'dart:async';
+import 'dart:isolate';
+import 'package:path/path.dart' as Path;
+import 'package:krishivue/pages/prediction.dart';
 import 'package:flutter/material.dart';
 import 'package:krishivue/widgets/app_bar.dart';
 import "package:http/http.dart" as http;
+
 class AboutUs extends StatefulWidget {
   const AboutUs({super.key});
 
@@ -19,24 +24,75 @@ class _AboutUsState extends State<AboutUs> {
   TextEditingController tempController = TextEditingController();
   TextEditingController humidityController = TextEditingController();
   TextEditingController phController = TextEditingController();
+  void _showResultModal(String result) {
+  showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return SizedBox(
+                height: 200,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(color:Colors.lightGreen,),
+                        child: Text("The crop that is best suitable for field is:${result}")
+                        ),
+                      const SizedBox(height: 10,),
+                      ElevatedButton(
+                        child: const Text('OK'),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+  );
+  }
+
   void _submitdata() async {
      var data={
-      'n':nController.text,
-      'p':pController.text,
-      'k':kController.text,
-      'temperature':tempController.text,
-      'humidity':humidityController.text,
-      'ph':phController.text,
-      'rainfall':rainController.text,
+      'n':double.parse(nController.text),
+      'p':double.parse(pController.text),
+      'k':double.parse(kController.text),
+      'temperature':double.parse(tempController.text),
+      'humidity':double.parse(humidityController.text),
+      'ph':double.parse(phController.text),
+      'rainfall':double.parse(rainController.text),
       
      };
-     print(data);
-    //  var apiURL=Uri.parse('your api url');
-    //  var request=http.post(
-    //   apiURL,
-    //   body:data,
+    // print(data);
+      final myString = await json.encode(data);
+       print(myString);
+     final Uri uri = Uri.parse('http://192.168.1.66:8000/predictCrop'); // Replace with your API endpoint URL
+
+  try {
+    final response = await http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(data),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = json.decode(response.body);
+      print(jsonResponse);
       
-    //  );
+_showResultModal(jsonResponse['prediction']);
+
+
+    } else {
+      print('Post request failed with status: ${response.statusCode}');
+      print('Response: ${response.body}');
+    }
+  } catch (error) {
+    print('Error making post request: $error');
+  }
+
+
+
   }
   @override
   Widget build(BuildContext context) {

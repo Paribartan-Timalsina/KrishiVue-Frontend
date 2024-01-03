@@ -98,7 +98,7 @@ bool _isRearCameraSelected = true;
       //results!.sort((a, b) => b.score.compareTo(a.score));
       //LTRB 207.5, 0.8, 317.7, 17.8
        print("The results after sorting:");
-        print(results![0]);
+        print(results?[0]);
        print(results![0].location.left);
        final rectData= {
           'left':results![0].location.left,
@@ -121,7 +121,30 @@ bool _isRearCameraSelected = true;
                     myString:myString,
                   )));
                   
-    } on CameraException catch (e) {
+    }  catch (e) {
+      final snackBar = SnackBar(
+            content: Text("$e",
+            style: TextStyle(fontSize: 20)),
+      backgroundColor: Color.fromARGB(255, 223, 101, 44),
+      dismissDirection: DismissDirection.up,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(
+          bottom: MediaQuery.of(context).size.height - 150,
+          left: 10,
+          right: 10
+          ),
+            
+            action: SnackBarAction(
+              label: 'OK',
+              onPressed: () {
+                // Some code to undo the change.
+              },
+            ),
+          );
+
+          // Find the ScaffoldMessenger in the widget tree
+          // and use it to show a SnackBar.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
       debugPrint('Error occured while taking picture: $e');
       return null;
     }

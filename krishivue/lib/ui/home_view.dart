@@ -15,10 +15,7 @@ class HomeView extends StatelessWidget {
       key: GlobalKey(),
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Image.asset(
-          'assets/images/tfl_logo.png',
-          fit: BoxFit.contain,
-        ),
+        title: Text('Real Time Detection')
       ),
       body: const DetectorWidget(),
     );

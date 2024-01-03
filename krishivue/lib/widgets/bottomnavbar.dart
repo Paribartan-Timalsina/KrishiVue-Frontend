@@ -59,12 +59,12 @@ int _selectedIndex = 0;
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.info_outline),
-                label: 'About Us',
+                label: 'Predict Crop',
                 backgroundColor: Colors.green,
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.contact_page),
-                label: 'Contact Us',
+                label: 'About Us',
                 backgroundColor: Color.fromARGB(255, 9, 155, 222),
               ),
               // BottomNavigationBarItem(
