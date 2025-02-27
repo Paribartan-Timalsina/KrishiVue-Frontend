@@ -2,14 +2,14 @@
 
 ## Description
 
-KrishiVue is a mobile application developed for plant leaf detection and disease classification using Convolutional Neural Networks (CNN). The app helps farmers identify crop diseases efficiently by leveraging real-time camera feeds and image uploads. The backend is built with **FastAPI**, ensuring fast and scalable API development. The mobile app is developed using **Flutter** for cross-platform compatibility.
+KrishiVue is a mobile application designed for plant leaf detection and disease classification using Convolutional Neural Networks (CNN). The application assists farmers in identifying crop diseases efficiently through real-time camera feeds and image uploads. The backend is powered by **FastAPI**, ensuring fast and scalable API development, while the mobile application is developed using **Flutter** for cross-platform compatibility.
 
 ## Features
 
-- Real-time plant disease detection using camera feeds.
-- Upload images for disease classification.
-- Powered by pre-trained models like **SSD MobileNetV2** and **ResNet** for high accuracy.
-- Provides a detailed disease diagnosis for informed decision-making by farmers.
+- **Real-time plant disease detection** using camera feeds.
+- **Image upload support** for disease classification.
+- **Pre-trained models** like **SSD MobileNetV2** and **ResNet** for high accuracy.
+- **Detailed disease diagnosis** to help farmers make informed decisions.
 
 ## Tech Stack
 
@@ -22,15 +22,38 @@ KrishiVue is a mobile application developed for plant leaf detection and disease
 
 ## Installation & Execution
 
-### 1. Clone the Repository:
+### 1. Clone the Repository
 
 Clone the project repository and navigate to the project folder:
 
 ```sh
-git clone https://github.com/your-repository.git](https://github.com/Paribartan-Timalsina/KrishiVue-Frontend.git
+git clone https://github.com/Paribartan-Timalsina/KrishiVue-Frontend.git
 cd krishivue
-pip install -r requirements.txt
-Backend Server: uvicorn main:app --reload
-Mobile app: flutter run
-
 ```
+
+### 2. Install Dependencies
+
+Install the required dependencies for the backend:
+
+```sh
+pip install -r requirements.txt
+```
+
+### 3. Run the Backend Server
+
+Start the FastAPI backend server using Uvicorn:
+
+```sh
+uvicorn main:app --reload
+```
+
+### 4. Run the Mobile Application
+
+Navigate to the Flutter project directory and run the mobile application:
+
+```sh
+flutter run
+```
+
+
+
